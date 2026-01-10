@@ -10,8 +10,7 @@ const CalculatorButton = ({ CalculatorButtons, handleCalButton }) => {
           onClick={() => handleCalButton(button)}
           className={style.calculatorButton}
         >
-          {" "}
-          {button}{" "}
+          {button}
         </button>
       ))}
     </div>
