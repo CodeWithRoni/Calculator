@@ -1,8 +1,8 @@
 {
-  "name": "nova-calc",
-  "version": "1.0.0",
+  "name": "calculator",
+  "version": "1.0.1",
   "private": true,
-  "description": "Nova Calc – cross-platform calculator for Web, Windows, macOS, Linux, Android and iOS",
+  "description": "Calculator – cross-platform calculator for Web, Windows, macOS, Linux, Android and iOS",
   "author": {
     "name": "Md. Amzad Hossain Roni",
     "email": "ahroni.usa@gmail.com"

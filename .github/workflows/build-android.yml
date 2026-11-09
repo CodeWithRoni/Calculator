@@ -50,17 +50,17 @@ jobs:
         shell: bash
         run: |
           mkdir -p release-output
-          cp android/app/build/outputs/apk/debug/app-debug.apk release-output/Nova-Calc-Android-debug.apk
+          cp android/app/build/outputs/apk/debug/app-debug.apk release-output/Calculator-Android-debug.apk
       - name: Generate signed release APK (only when signing secrets exist)
         if: env.ANDROID_KEYSTORE_BASE64 != '' && env.ANDROID_KEYSTORE_PASSWORD != '' && env.ANDROID_KEY_ALIAS != '' && env.ANDROID_KEY_PASSWORD != ''
         shell: bash
         run: |
-          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/nova-release.jks
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/calculator-release.jks
           cat >> android/app/build.gradle <<'GRADLE'
           android {
               signingConfigs {
-                  novaRelease {
-                      storeFile file('nova-release.jks')
+                  calculatorRelease {
+                      storeFile file('calculator-release.jks')
                       storePassword System.getenv('ANDROID_KEYSTORE_PASSWORD')
                       keyAlias System.getenv('ANDROID_KEY_ALIAS')
                       keyPassword System.getenv('ANDROID_KEY_PASSWORD')
@@ -68,17 +68,17 @@ jobs:
               }
               buildTypes {
                   release {
-                      signingConfig signingConfigs.novaRelease
+                      signingConfig signingConfigs.calculatorRelease
                   }
               }
           }
           GRADLE
           (cd android && ./gradlew assembleRelease --no-daemon)
-          cp android/app/build/outputs/apk/release/app-release.apk release-output/Nova-Calc-Android-signed-release.apk
-          rm -f android/app/nova-release.jks
+          cp android/app/build/outputs/apk/release/app-release.apk release-output/Calculator-Android-signed-release.apk
+          rm -f android/app/calculator-release.jks
       - uses: actions/upload-artifact@v4
         with:
-          name: nova-calc-android-apk
+          name: calculator-android-apk
           path: release-output/*.apk
           if-no-files-found: error
           retention-days: 30

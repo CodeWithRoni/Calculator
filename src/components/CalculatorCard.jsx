@@ -27,7 +27,7 @@ const keys = [
 ]
 
 function loadInitialState() {
-  try { return createInitialState(JSON.parse(window.localStorage.getItem('nova-calc-history') || '[]')) }
+  try { return createInitialState(JSON.parse(window.localStorage.getItem('calculator-history') || '[]')) }
   catch { return createInitialState() }
 }
 
@@ -37,7 +37,7 @@ export default function CalculatorCard() {
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
-    try { window.localStorage.setItem('nova-calc-history', JSON.stringify(state.history)) } catch { /* browser storage may be disabled */ }
+    try { window.localStorage.setItem('calculator-history', JSON.stringify(state.history)) } catch { /* browser storage may be disabled */ }
   }, [state.history])
 
   useEffect(() => {
@@ -80,8 +80,8 @@ export default function CalculatorCard() {
     : state.lastExpression
 
   return (
-    <section className="calculator" aria-label="Nova calculator">
-      <div className="calc-header"><div className="calc-identity"><span className="calc-logomark"><span>+</span><span>×</span></span><span><strong>NOVA<span className="calc-identity-dot">.</span></strong><small>YOUR SMART CALCULATOR</small></span></div><button className={'history-toggle' + (historyOpen ? ' history-toggle-on' : '')} type="button" aria-label={historyOpen ? 'Close calculation history' : 'Open calculation history'} aria-expanded={historyOpen} onClick={() => setHistoryOpen((value) => !value)}><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5m4-1v5l4 2"/></svg><span>History</span></button></div>
+    <section className="calculator" aria-label="Calculator">
+      <div className="calc-header"><div className="calc-identity"><span className="calc-logomark"><span>+</span><span>×</span></span><span><strong>CALCULATOR<span className="calc-identity-dot">.</span></strong><small>YOUR SMART CALCULATOR</small></span></div><button className={'history-toggle' + (historyOpen ? ' history-toggle-on' : '')} type="button" aria-label={historyOpen ? 'Close calculation history' : 'Open calculation history'} aria-expanded={historyOpen} onClick={() => setHistoryOpen((value) => !value)}><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5m4-1v5l4 2"/></svg><span>History</span></button></div>
       <div className="calc-inner">
         <Display display={state.display} expression={expression} error={state.error} waiting={state.waiting} onCopy={copyResult} copied={copied} />
         <div className="function-row" role="group" aria-label="Extra math functions"><span className="function-caption">QUICK TOOLS</span><button type="button" onClick={() => dispatch({ type: 'UNARY', value: 'square' })} aria-label="Square current number">x²</button><button type="button" onClick={() => dispatch({ type: 'UNARY', value: 'sqrt' })} aria-label="Square root">√x</button><button type="button" onClick={() => dispatch({ type: 'UNARY', value: 'inverse' })} aria-label="Reciprocal">1/x</button></div>

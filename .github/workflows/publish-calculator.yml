@@ -1,0 +1,69 @@
+name: Publish Calculator v1.0.1 for Windows, macOS, Linux, Android and iOS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/publish-calculator.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Verify branded version and source quality
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(node -p "require('./package.json').name")" = "calculator"
+          test "$(node -p "require('./package.json').version")" = "1.0.1"
+          npm ci --ignore-scripts --no-audit --no-fund
+          npm run lint
+          npm test
+          npm run build
+          npm run build:web
+
+      - name: Publish Calculator v1.0.1 GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view v1.0.1 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release edit v1.0.1 --repo "$GITHUB_REPOSITORY" \
+              --title "Calculator v1.0.1 — All Platforms" \
+              --notes-file docs/release-notes-v1.0.1.md
+          else
+            gh release create v1.0.1 --repo "$GITHUB_REPOSITORY" \
+              --target "$GITHUB_SHA" \
+              --title "Calculator v1.0.1 — All Platforms" \
+              --notes-file docs/release-notes-v1.0.1.md
+          fi
+
+      - name: Build Windows EXE, macOS DMG and Linux DEB
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run build-desktop.yml --repo "$GITHUB_REPOSITORY" --ref v1.0.1
+
+      - name: Build Android APK
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run build-android.yml --repo "$GITHUB_REPOSITORY" --ref v1.0.1
+
+      - name: Build iOS app and signed IPA when credentials exist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run build-ios.yml --repo "$GITHUB_REPOSITORY" --ref v1.0.1
+
+      - name: Release link
+        run: echo "https://github.com/$GITHUB_REPOSITORY/releases/tag/v1.0.1"

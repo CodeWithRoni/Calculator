@@ -1,4 +1,4 @@
-name: Deploy Nova Calc web app (GitHub Pages)
+name: Deploy Calculator web app (GitHub Pages)
 
 on:
   push:

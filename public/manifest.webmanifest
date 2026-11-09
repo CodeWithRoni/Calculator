@@ -1,9 +1,9 @@
 {
-  "name": "Nova Calc — Premium Calculator",
-  "short_name": "Nova Calc",
+  "name": "Calculator — Premium Calculator",
+  "short_name": "Calculator",
   "description": "Premium everyday calculator by CodeWithRoni",
-  "start_url": "/calculator-react/",
-  "scope": "/calculator-react/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "theme_color": "#0a101e",
   "background_color": "#0a101e",

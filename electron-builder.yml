@@ -1,5 +1,5 @@
-appId: com.codewithroni.novacalc
-productName: Nova Calc
+appId: com.codewithroni.calculator
+productName: Calculator
 copyright: Copyright © 2026 Md. Amzad Hossain Roni
 asar: true
 directories:
@@ -14,23 +14,23 @@ win:
   target:
     - nsis
     - portable
-  artifactName: Nova-Calc-${version}-Windows-${arch}.${ext}
+  artifactName: Calculator-${version}-Windows-${arch}.${ext}
 nsis:
-  artifactName: Nova-Calc-${version}-Windows-Setup-${arch}.${ext}
+  artifactName: Calculator-${version}-Windows-Setup-${arch}.${ext}
   oneClick: false
   allowToChangeInstallationDirectory: true
 portable:
-  artifactName: Nova-Calc-${version}-Windows-Portable-${arch}.${ext}
+  artifactName: Calculator-${version}-Windows-Portable-${arch}.${ext}
 mac:
   icon: build/icon.png
   category: public.app-category.productivity
   target:
     - dmg
   identity: null
-  artifactName: Nova-Calc-${version}-macOS-${arch}.${ext}
+  artifactName: Calculator-${version}-macOS-${arch}.${ext}
 linux:
   icon: build/icon.png
   category: Utility
   target:
     - deb
-  artifactName: Nova-Calc-${version}-Linux-${arch}.${ext}
+  artifactName: Calculator-${version}-Linux-${arch}.${ext}

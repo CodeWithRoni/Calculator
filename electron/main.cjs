@@ -9,7 +9,7 @@ function createWindow() {
     minHeight: 580,
     show: false,
     backgroundColor: '#0a101e',
-    title: 'Nova Calc',
+    title: 'Calculator',
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: false,

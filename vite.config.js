@@ -1,8 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 
-// GitHub Pages at /calculator-react/; Electron/Capacitor open local files.
-export default defineConfig(({ mode }) => ({
-  plugins: [react()],
-  base: mode === 'pages' ? '/calculator-react/' : './',
-}))
+// Follow the actual GitHub repository name before and after renaming.
+export default defineConfig(({ mode }) => {
+  const repository = process.env.GITHUB_REPOSITORY?.split('/').pop() || 'Calculator'
+  return {
+    plugins: [react()],
+    base: mode === 'pages' ? '/' + repository + '/' : './',
+  }
+})

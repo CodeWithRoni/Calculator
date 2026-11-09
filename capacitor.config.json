@@ -1,6 +1,6 @@
 {
-  "appId": "com.codewithroni.novacalc",
-  "appName": "Nova Calc",
+  "appId": "com.codewithroni.calculator",
+  "appName": "Calculator",
   "webDir": "dist",
   "server": {
     "androidScheme": "https"

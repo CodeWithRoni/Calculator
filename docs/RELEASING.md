@@ -1,4 +1,4 @@
-# Nova Calc — Cross-Platform Release Guide
+# Calculator — Cross-Platform Release Guide
 
 This repository contains **one React UI** and multiple packaging targets.
 
@@ -7,8 +7,8 @@ This repository contains **one React UI** and multiple packaging targets.
 1. Open **Repository → Settings → Pages**.
 2. Set **Source** to **GitHub Actions** (one-time requirement).
 3. Each push to the **main** branch triggers `.github/workflows/deploy-pages.yml`.
-4. That workflow runs `npm run build:web` (Vite's base becomes `/calculator-react/`), uploads `dist`, and publishes the latest app.
-5. View it at https://codewithroni.github.io/calculator-react/.
+4. That workflow runs `npm run build:web` (Vite's base becomes `/Calculator/`), uploads `dist`, and publishes the latest app.
+5. View it at https://codewithroni.github.io/Calculator/.
 
 Desktop/mobile builds run plain `npm run build`, with relative asset URLs suitable for local app files. Do **not** change Vite's conditional base to a fixed absolute Pages path.
 
@@ -39,9 +39,9 @@ Open **Actions → Build Android APK → Run workflow**.
 
 The pipeline runs Capacitor 8, generates an Android project using the same React `dist`, and calls `./gradlew assembleDebug`.
 
-Download: **Actions → workflow run → Artifacts → nova-calc-android-apk**.
+Download: **Actions → workflow run → Artifacts → calculator-android-apk**.
 
-Without secrets it includes `Nova-Calc-Android-debug.apk` (installable for personal testing, debugging enabled). For a **signed release APK**, add these four Actions secrets:
+Without secrets it includes `Calculator-Android-debug.apk` (installable for personal testing, debugging enabled). For a **signed release APK**, add these four Actions secrets:
 
 | Secret | Required value |
 | --- | --- |
@@ -52,7 +52,7 @@ Without secrets it includes `Nova-Calc-Android-debug.apk` (installable for perso
 
 Do not commit any certificate, password or keystore. Configure under **Settings → Secrets and variables → Actions**.
 
-With all secrets set, the workflow also generates `Nova-Calc-Android-signed-release.apk`. For Google Play Store, an AAB and Play App Signing are usually preferable; this pipeline targets APK distribution.
+With all secrets set, the workflow also generates `Calculator-Android-signed-release.apk`. For Google Play Store, an AAB and Play App Signing are usually preferable; this pipeline targets APK distribution.
 
 ## 4. iOS — IPA
 
@@ -60,7 +60,7 @@ Run **Actions → Validate iOS app and optionally export signed IPA**.
 
 Without signing secrets, the pipeline attempts a **simulator build only**; this confirms native compilation but does **not** produce an installable `.ipa`. Apple requires code signing to install an IPA on devices or distribute it through TestFlight / App Store.
 
-To enable signed IPA export, obtain an Apple Developer Program team, certificate and a compatible provisioning profile for **`com.codewithroni.novacalc`**. Add Actions secrets:
+To enable signed IPA export, obtain an Apple Developer Program team, certificate and a compatible provisioning profile for **`com.codewithroni.calculator`**. Add Actions secrets:
 
 | Secret | Required value |
 | --- | --- |
@@ -71,7 +71,7 @@ To enable signed IPA export, obtain an Apple Developer Program team, certificate
 
 Optional repository **Actions variable** `IOS_EXPORT_METHOD`: default `ad-hoc`, change as necessary to match your Apple profile and distribution method. For an Ad Hoc install, the target iPhone's UDID must be registered in the provisioning profile.
 
-The pipeline uses macOS 26 and Xcode 26, signs the archive, then runs `xcodebuild -exportArchive`. Artifact: `nova-calc-ios-signed-ipa`.
+The pipeline uses macOS 26 and Xcode 26, signs the archive, then runs `xcodebuild -exportArchive`. Artifact: `calculator-ios-signed-ipa`.
 
 **Do not share Apple account passwords, keys, certificates or OTPs in a chat.** Use GitHub encrypted secrets.
 
@@ -79,9 +79,9 @@ The pipeline uses macOS 26 and Xcode 26, signs the archive, then runs `xcodebuil
 
 When your changes are merged into `main`:
 ```bash
-npm version 1.0.1
+npm version 1.0.2
 git push origin main
-git push origin v1.0.1
+git push origin v1.0.2
 ```
 
 The package's version and tag should match. A pushed `v*` tag triggers the desktop, Android and iOS workflows. Generated installers and APKs are attached to the matching GitHub Release; the IPA is attached only when Apple signing is configured and succeeds.
@@ -94,7 +94,7 @@ Edit React components / CSS → commit / push to `main` → web preview automati
 
 ## 7. Common troubleshooting
 
-- **Pages returns 404**: enable GitHub Actions as Pages source and check the deploy workflow. Use `/calculator-react/`, not the root site URL.
+- **Pages returns 404**: enable GitHub Actions as Pages source and check the deploy workflow. The Vite base automatically matches the current GitHub repository name (for example `/Calculator/` after renaming), not the root URL.
 - **Assets missing on desktop**: build using `npm run build` (relative Vite base), not `npm run build:web`.
 - **Android build**: requires Node.js 22+, JDK 21 and Android SDK. Capacitor 8 targets Android API 36.
 - **iOS build**: requires Xcode 26+; install CocoaPods if your native template needs it.

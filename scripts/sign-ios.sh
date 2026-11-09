@@ -7,10 +7,10 @@ test -n "$IOS_PROVISIONING_PROFILE_BASE64"
 test -n "$APPLE_TEAM_ID"
 
 KEYCHAIN_PASSWORD="$(openssl rand -hex 24)"
-KEYCHAIN_PATH="$RUNNER_TEMP/nova-signing.keychain-db"
-CERTIFICATE_PATH="$RUNNER_TEMP/nova-distribution.p12"
-PROFILE_PATH="$RUNNER_TEMP/nova.mobileprovision"
-PROFILE_PLIST="$RUNNER_TEMP/nova-profile.plist"
+KEYCHAIN_PATH="$RUNNER_TEMP/calculator-signing.keychain-db"
+CERTIFICATE_PATH="$RUNNER_TEMP/calculator-distribution.p12"
+PROFILE_PATH="$RUNNER_TEMP/calculator.mobileprovision"
+PROFILE_PLIST="$RUNNER_TEMP/calculator-profile.plist"
 
 printf '%s' "$IOS_CERTIFICATE_BASE64" | base64 --decode > "$CERTIFICATE_PATH"
 printf '%s' "$IOS_PROVISIONING_PROFILE_BASE64" | base64 --decode > "$PROFILE_PATH"
@@ -32,7 +32,7 @@ xcodebuild \
   -project ios/App/App.xcodeproj \
   -scheme App \
   -configuration Release \
-  -archivePath "$RUNNER_TEMP/NovaCalc.xcarchive" \
+  -archivePath "$RUNNER_TEMP/Calculator.xcarchive" \
   -destination 'generic/platform=iOS' \
   CODE_SIGN_STYLE=Manual \
   DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
@@ -43,13 +43,13 @@ xcodebuild \
 python3 - <<'PY'
 import os, plistlib
 temp = os.environ["RUNNER_TEMP"]
-with open(os.path.join(temp, "nova-profile.plist"), "rb") as source:
+with open(os.path.join(temp, "calculator-profile.plist"), "rb") as source:
     name = plistlib.load(source)["Name"]
 options = {
     "method": os.environ.get("IOS_EXPORT_METHOD", "ad-hoc"),
     "teamID": os.environ["APPLE_TEAM_ID"],
     "signingStyle": "manual",
-    "provisioningProfiles": {"com.codewithroni.novacalc": name}
+    "provisioningProfiles": {"com.codewithroni.calculator": name}
 }
 with open(os.path.join(temp, "ExportOptions.plist"), "wb") as destination:
     plistlib.dump(options, destination)
@@ -57,7 +57,11 @@ PY
 
 mkdir -p release-output
 xcodebuild -exportArchive \
-  -archivePath "$RUNNER_TEMP/NovaCalc.xcarchive" \
+  -archivePath "$RUNNER_TEMP/Calculator.xcarchive" \
   -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
   -exportPath release-output
+for file in release-output/*.ipa; do
+  [ -f "$file" ] || continue
+  mv "$file" "release-output/Calculator-iOS-$(node -p "require('./package.json').version").ipa"
+done
 ls -lah release-output/*.ipa

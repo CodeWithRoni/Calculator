@@ -41,7 +41,7 @@ function App() {
           <button className="theme-switch" onClick={() => setTheme((value) => value === 'dark' ? 'light' : 'dark')} type="button" aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'} title={theme === 'dark' ? 'Light mode' : 'Dark mode'}>
             <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={19} />
           </button>
-          <a href="https://github.com/CodeWithRoni/calculator-react" className="github-button" target="_blank" rel="noopener noreferrer"><Icon name="github" size={17} /> <span>View on GitHub</span> <Icon name="diagonal" size={14} /></a>
+          <a href="https://github.com/CodeWithRoni/Calculator" className="github-button" target="_blank" rel="noopener noreferrer"><Icon name="github" size={17} /> <span>View on GitHub</span> <Icon name="diagonal" size={14} /></a>
         </div>
       </header>
 
@@ -49,7 +49,7 @@ function App() {
         <div className="hero-copy">
           <div className="eyebrow"><span className="eyebrow-line" /><span>THE EVERYDAY CALCULATOR, REIMAGINED</span></div>
           <h1>Simple math.<br /><span className="gradient-text">Extraordinary</span><br />experience<span className="hero-period">.</span></h1>
-          <p className="intro">Every tap should feel effortless. Meet <strong>Nova Calc</strong> — a thoughtfully designed calculator that makes everyday numbers feel a little more beautiful.</p>
+          <p className="intro">Every tap should feel effortless. Meet <strong>Calculator</strong> — a thoughtfully designed calculator that makes everyday numbers feel a little more beautiful.</p>
           <div className="feature-chips">
             <span><Icon name="bolt" size={16} /> Instant results</span>
             <span><Icon name="keyboard" size={16} /> Keyboard-friendly</span>

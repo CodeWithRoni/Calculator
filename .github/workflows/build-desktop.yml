@@ -48,7 +48,7 @@ jobs:
       - name: Upload installers to this workflow run
         uses: actions/upload-artifact@v4
         with:
-          name: nova-calc-${{ matrix.label }}
+          name: calculator-${{ matrix.label }}
           path: |
             release-output/*.exe
             release-output/*.dmg

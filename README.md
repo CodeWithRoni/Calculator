@@ -1,10 +1,10 @@
-# ✦ Nova Calc — One Calculator. Every Screen.
+# ✦ Calculator — One Calculator. Every Screen.
 
 A premium React calculator by **Md. Amzad Hossain Roni** (**CodeWithRoni**).
 
-**Web app:** https://codewithroni.github.io/calculator-react/
+**Web app:** https://codewithroni.github.io/Calculator/
 
-**Cross-platform v1.0.0 Release:** https://github.com/CodeWithRoni/calculator-react/releases/tag/v1.0.0
+**Cross-platform v1.0.0 Release:** https://github.com/CodeWithRoni/Calculator/releases/tag/v1.0.1
 
 ## Platforms and outputs
 
@@ -42,9 +42,9 @@ npm run build
 
 ### Web: automatic preview of every main-branch update
 
-Commit code or design changes to `main`. The **Deploy Nova Calc web app (GitHub Pages)** workflow builds with `npm run build:web` and deploys the latest files to:
+Commit code or design changes to `main`. The **Deploy Calculator web app (GitHub Pages)** workflow builds with `npm run build:web` and deploys the latest files to:
 
-https://codewithroni.github.io/calculator-react/
+https://codewithroni.github.io/Calculator/
 
 **One-time setup**: Repository → **Settings → Pages → Build and deployment → Source → GitHub Actions**. This setting must be enabled once by the repository owner if not already configured.
 
@@ -86,7 +86,7 @@ To create a device-installable IPA, set up Apple Distribution and provisioning i
 
 ## Automated releases
 
-Each release workflow is accessible from the **Actions** tab. Use **Run workflow** to create downloadable build artifacts. Push a version tag such as `v1.0.0` to build all supported targets and attach generated packages to **GitHub Releases**.
+Each release workflow is accessible from the **Actions** tab. Use **Run workflow** to create downloadable build artifacts. Push a version tag such as `v1.0.1` to build all supported targets and attach generated packages to **GitHub Releases**.
 
 - [Desktop builders](.github/workflows/build-desktop.yml)
 - [Android builder](.github/workflows/build-android.yml)
