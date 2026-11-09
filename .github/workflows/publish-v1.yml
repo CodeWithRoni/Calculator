@@ -1,0 +1,61 @@
+name: Publish Nova Calc v1.0.0 for all supported platforms
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/publish-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  publish-and-dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify release version
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="$(node -p "require('./package.json').version")"
+          test "$VERSION" = "1.0.0"
+
+      - name: Create tagged GitHub Release v1.0.0
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if gh release view v1.0.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "v1.0.0 already exists; will use the existing release."
+          else
+            gh release create v1.0.0 --repo "$GITHUB_REPOSITORY" \
+              --target "$GITHUB_SHA" \
+              --title "Nova Calc v1.0.0 — Windows · macOS · Linux · Android · iOS" \
+              --notes-file docs/release-notes-v1.0.0.md
+          fi
+
+      - name: Start Windows, macOS and Linux installer builds
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run build-desktop.yml --repo "$GITHUB_REPOSITORY" --ref v1.0.0
+
+      - name: Start Android APK build
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run build-android.yml --repo "$GITHUB_REPOSITORY" --ref v1.0.0
+
+      - name: Start iOS simulator and signed IPA build (when configured)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run build-ios.yml --repo "$GITHUB_REPOSITORY" --ref v1.0.0
+
+      - name: Show release URL
+        run: echo "https://github.com/$GITHUB_REPOSITORY/releases/tag/v1.0.0"

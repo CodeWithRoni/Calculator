@@ -16,8 +16,11 @@ win:
     - portable
   artifactName: Nova-Calc-${version}-Windows-${arch}.${ext}
 nsis:
+  artifactName: Nova-Calc-${version}-Windows-Setup-${arch}.${ext}
   oneClick: false
   allowToChangeInstallationDirectory: true
+portable:
+  artifactName: Nova-Calc-${version}-Windows-Portable-${arch}.${ext}
 mac:
   icon: build/icon.png
   category: public.app-category.productivity

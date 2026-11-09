@@ -4,6 +4,8 @@ A premium React calculator by **Md. Amzad Hossain Roni** (**CodeWithRoni**).
 
 **Web app:** https://codewithroni.github.io/calculator-react/
 
+**Cross-platform v1.0.0 Release:** https://github.com/CodeWithRoni/calculator-react/releases/tag/v1.0.0
+
 ## Platforms and outputs
 
 | Platform | Technology | Output | How to build |
