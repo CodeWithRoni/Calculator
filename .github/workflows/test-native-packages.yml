@@ -1,8 +1,7 @@
 name: Validate native installers on setup branch
 
 on:
-  push:
-    branches: [cross-platform-release-setup]
+  workflow_dispatch:
 
 permissions:
   contents: read

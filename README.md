@@ -22,7 +22,7 @@ A premium React calculator by **Md. Amzad Hossain Roni** (**CodeWithRoni**).
 - Responsive premium dark / light UI and calculation history
 - Keyboard shortcuts, one-tap result copy
 - Addition, subtraction, multiplication, division, percentages, reciprocal, square, square root and sign toggle
-- No JavaScript \`eval()\`; controlled calculator logic
+- No JavaScript `eval()`; controlled calculator logic
 - Local browser storage for history and theme
 - Shared React source reused in browser, Electron and Capacitor
 
@@ -30,17 +30,17 @@ A premium React calculator by **Md. Amzad Hossain Roni** (**CodeWithRoni**).
 
 Node.js 22.12+ is required.
 
-\`\`\`bash
+```bash
 npm ci
 npm run dev
 npm run lint
 npm test
 npm run build
-\`\`\`
+```
 
 ### Web: automatic preview of every main-branch update
 
-Commit code or design changes to \`main\`. The **Deploy Nova Calc web app (GitHub Pages)** workflow builds with \`npm run build:web\` and deploys the latest files to:
+Commit code or design changes to `main`. The **Deploy Nova Calc web app (GitHub Pages)** workflow builds with `npm run build:web` and deploys the latest files to:
 
 https://codewithroni.github.io/calculator-react/
 
@@ -48,43 +48,43 @@ https://codewithroni.github.io/calculator-react/
 
 ### Windows, macOS and Linux
 
-\`\`\`bash
+```bash
 npm run desktop:dev
 npm run desktop:win     # on Windows
 npm run desktop:mac     # on macOS
 npm run desktop:linux   # on Linux
-\`\`\`
+```
 
-Electron's entry point is \`electron/main.cjs\`. It loads \`dist/index.html\` from the packaged app with Node integration disabled and Chromium sandbox enabled. Packaging is configured in \`electron-builder.yml\`.
+Electron's entry point is `electron/main.cjs`. It loads `dist/index.html` from the packaged app with Node integration disabled and Chromium sandbox enabled. Packaging is configured in `electron-builder.yml`.
 
 ### Android
 
-\`\`\`bash
+```bash
 npm ci
 npm run build
 npm run android:add   # first time only
 npm run android:sync  # after web code changes
 cd android
 ./gradlew assembleDebug
-\`\`\`
+```
 
-APK: \`android/app/build/outputs/apk/debug/app-debug.apk\`
+APK: `android/app/build/outputs/apk/debug/app-debug.apk`
 
 ### iOS (Mac + Xcode 26+)
 
-\`\`\`bash
+```bash
 npm ci
 npm run build
 npm run ios:add       # first time only
 npm run ios:sync      # after web code changes
 npx cap open ios
-\`\`\`
+```
 
 To create a device-installable IPA, set up Apple Distribution and provisioning in the GitHub Secrets. See **[Cross-platform release guide](docs/RELEASING.md)**.
 
 ## Automated releases
 
-Each release workflow is accessible from the **Actions** tab. Use **Run workflow** to create downloadable build artifacts. Push a version tag such as \`v1.0.0\` to build all supported targets and attach generated packages to **GitHub Releases**.
+Each release workflow is accessible from the **Actions** tab. Use **Run workflow** to create downloadable build artifacts. Push a version tag such as `v1.0.0` to build all supported targets and attach generated packages to **GitHub Releases**.
 
 - [Desktop builders](.github/workflows/build-desktop.yml)
 - [Android builder](.github/workflows/build-android.yml)
