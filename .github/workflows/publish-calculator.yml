@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/publish-calculator.yml"
+      - "vite.config.js"
   workflow_dispatch:
 
 permissions:

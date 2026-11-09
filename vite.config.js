@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
+import process from 'node:process'
 
 // Follow the actual GitHub repository name before and after renaming.
 export default defineConfig(({ mode }) => {
