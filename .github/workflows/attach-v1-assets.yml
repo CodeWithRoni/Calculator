@@ -1,0 +1,44 @@
+name: Attach verified v1.0.0 desktop packages to GitHub Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/attach-v1-assets.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  attach:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download verified Windows, macOS and Linux build artifacts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh run download 42604613337 --repo "$GITHUB_REPOSITORY" --dir incoming
+          mkdir -p release-upload
+          find incoming -type f \( -name "*.exe" -o -name "*.dmg" -o -name "*.deb" \) -exec cp -v {} release-upload/ \;
+          ls -lah release-upload
+          for expected in \
+            Nova-Calc-1.0.0-Windows-Setup-x64.exe \
+            Nova-Calc-1.0.0-Windows-Portable-x64.exe \
+            Nova-Calc-1.0.0-macOS-arm64.dmg \
+            Nova-Calc-1.0.0-macOS-x64.dmg \
+            Nova-Calc-1.0.0-Linux-x64.deb; do
+            test -s "release-upload/$expected" || { echo "::error::Missing $expected"; exit 1; }
+          done
+      - name: Publish 5 desktop installers on GitHub Release v1.0.0
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release upload v1.0.0 release-upload/*.exe release-upload/*.dmg release-upload/*.deb --repo "$GITHUB_REPOSITORY" --clobber
+          gh release view v1.0.0 --repo "$GITHUB_REPOSITORY" --json url,assets --jq '{url: .url, files: [.assets[].name]}'
