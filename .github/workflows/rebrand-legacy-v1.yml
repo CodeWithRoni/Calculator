@@ -1,0 +1,48 @@
+name: Rebrand historical Calculator v1.0.0 release asset names
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/rebrand-legacy-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rebrand-legacy-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rename historical release assets safely
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir -p legacy-assets
+          while IFS= read -r old; do
+            [[ "$old" == Nova-Calc* ]] || continue
+            new="$(printf '%s' "$old" | sed 's/^Nova-Calc/Calculator/')"
+            echo "Renaming historical file $old -> $new"
+            gh release download v1.0.0 --repo "$GITHUB_REPOSITORY" --pattern "$old" --dir legacy-assets --clobber
+            mv "legacy-assets/$old" "legacy-assets/$new"
+            gh release upload v1.0.0 "legacy-assets/$new" --repo "$GITHUB_REPOSITORY" --clobber
+            gh release delete-asset v1.0.0 "$old" --repo "$GITHUB_REPOSITORY" --yes
+            rm -f "legacy-assets/$new"
+          done < <(gh release view v1.0.0 --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name')
+      - name: Update legacy release title and add compatibility warning
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          {
+            cat docs/release-notes-v1.0.0.md
+            echo
+            echo "> **Historical build:** This original v1.0.0 was packaged before the application was renamed internally. Existing downloaded installers may still display the older app name when installed. For the fully renamed application use Calculator v1.0.1 or later."
+          } > "$RUNNER_TEMP/legacy-release-notes.md"
+          gh release edit v1.0.0 --repo "$GITHUB_REPOSITORY" \
+            --title "Calculator v1.0.0 — Legacy" \
+            --notes-file "$RUNNER_TEMP/legacy-release-notes.md"
