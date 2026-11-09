@@ -36,7 +36,7 @@ jobs:
       - name: Validate iOS simulator build (no signing needed)
         run: |
           xcodebuild \
-            -workspace ios/App/App.xcworkspace \
+            -project ios/App/App.xcodeproj \
             -scheme App \
             -configuration Debug \
             -sdk iphonesimulator \

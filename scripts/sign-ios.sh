@@ -29,7 +29,7 @@ mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
 cp "$PROFILE_PATH" "$HOME/Library/MobileDevice/Provisioning Profiles/$PROFILE_UUID.mobileprovision"
 
 xcodebuild \
-  -workspace ios/App/App.xcworkspace \
+  -project ios/App/App.xcodeproj \
   -scheme App \
   -configuration Release \
   -archivePath "$RUNNER_TEMP/NovaCalc.xcarchive" \

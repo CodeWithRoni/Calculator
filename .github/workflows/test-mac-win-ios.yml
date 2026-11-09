@@ -1,4 +1,4 @@
-name: Validate Windows, macOS and iOS targets
+name: Validate Capacitor iOS simulator project
 
 on:
   push:
@@ -8,36 +8,6 @@ permissions:
   contents: read
 
 jobs:
-  windows-exe:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci --no-audit --no-fund
-      - run: npm run build
-      - run: npx electron-builder --win nsis portable --x64 --publish never
-        env:
-          CSC_IDENTITY_AUTO_DISCOVERY: "false"
-      - run: Get-ChildItem release-output/*.exe
-
-  macos-dmg:
-    runs-on: macos-26
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci --no-audit --no-fund
-      - run: npm run build
-      - run: npx electron-builder --mac dmg --arm64 --publish never
-        env:
-          CSC_IDENTITY_AUTO_DISCOVERY: "false"
-      - run: ls -lah release-output/*.dmg
-
   ios-simulator:
     runs-on: macos-26
     steps:
@@ -53,7 +23,7 @@ jobs:
       - name: Build for iOS Simulator without signing
         run: |
           xcodebuild \
-            -workspace ios/App/App.xcworkspace \
+            -project ios/App/App.xcodeproj \
             -scheme App \
             -sdk iphonesimulator \
             -configuration Debug \
