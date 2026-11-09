@@ -1,20 +1,4 @@
-import React from "react";
-import style from "./CalculatorButton.module.css";
-
-const CalculatorButton = ({ CalculatorButtons, handleCalButton }) => {
-  return (
-    <div className={style.buttons}>
-      {CalculatorButtons.map((button) => (
-        <button
-          key={button}
-          onClick={() => handleCalButton(button)}
-          className={style.calculatorButton}
-        >
-          {button}
-        </button>
-      ))}
-    </div>
-  );
-};
-
-export default CalculatorButton;
+export default function CalculatorButton({ item, active, onPress }) {
+  const className = ['calc-key', item.kind === 'op' ? 'key-operator' : '', item.kind === 'utility' ? 'key-utility' : '', item.kind === 'equals' ? 'key-equals' : '', item.label === 'AC' ? 'key-clear' : '', active ? 'key-active' : ''].filter(Boolean).join(' ')
+  return <button type="button" className={className} aria-label={item.ariaLabel || item.label} aria-pressed={item.kind === 'op' ? Boolean(active) : undefined} onClick={() => onPress(item)}>{item.label === 'DEL' ? <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M9 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H9L2 12l7-8Z" /><path d="m12 9 6 6m0-6-6 6" /></svg> : item.label}</button>
+}

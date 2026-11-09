@@ -1,16 +1,65 @@
-# React + Vite
+# ✦ Nova Calc — Calculator, Reimagined
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Nova Calc** is a polished, keyboard-friendly React calculator by [CodeWithRoni](https://github.com/CodeWithRoni).
 
-Currently, two official plugins are available:
+> Simple math. Extraordinary experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Highlights
 
-## React Compiler
+- Premium responsive interface inspired by modern productivity apps
+- Dark and light modes, with saved preference
+- Arithmetic: addition, subtraction, multiplication, division
+- Percentage, sign toggle, square, square root, and reciprocal
+- Decimal support and controlled input limits
+- A searchable-in-your-mind history: see previous calculations and tap a result to reuse it
+- Calculation history saved locally in your browser (up to 24 items)
+- Physical keyboard support and one-tap result copying
+- Safer calculator logic **without `eval()` or `Function()`**
+- Friendly errors for division by zero and invalid square roots
+- Honors reduced-motion preferences
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## Keyboard shortcuts
 
-## Expanding the ESLint configuration
+| Key | Action |
+|---|---|
+| `0`–`9` | Enter number |
+| `.` | Decimal separator |
+| `+`, `-`, `*`, `/` | Arithmetic |
+| `%` | Percentage |
+| `Enter`, `=` | Calculate |
+| `Backspace`, `Delete` | Delete last digit |
+| `Escape` | Clear; closes history if open |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Run locally
+
+Requires Node.js compatible with Vite 7 (Node 20.19+ or 22.12+).
+
+```bash
+npm ci
+npm run dev
+```
+
+For testing or a production build:
+
+```bash
+npm test
+npm run lint
+npm run build
+```
+
+**Stack:** React 19, Vite 7, JavaScript, CSS.
+
+## How calculations work
+
+Basic binary operations calculate left-to-right as in a traditional handheld calculator. For example, entering `2 + 3 × 4 =` returns `20`, not `14`. Percentage operates on the current number; for addition/subtraction it uses a percentage of the stored value (for example, `200 + 10 % =` returns `220`). No general expression parser is used.
+
+## Privacy and data
+
+Nova Calc performs calculations in your browser. Theme preference and recent calculation history are stored in browser `localStorage`; the app does not send calculation history to a server. Fonts may load from Google Fonts, with system fallbacks.
+
+## Credits
+
+Designed and developed by **Md. Amzad Hossain Roni**.
+
+- [Portfolio](https://codewithroni.github.io/)
+- [GitHub](https://github.com/CodeWithRoni)
