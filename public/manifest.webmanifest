@@ -1,0 +1,18 @@
+{
+  "name": "Nova Calc — Premium Calculator",
+  "short_name": "Nova Calc",
+  "description": "Premium everyday calculator by CodeWithRoni",
+  "start_url": "/calculator-react/",
+  "scope": "/calculator-react/",
+  "display": "standalone",
+  "theme_color": "#0a101e",
+  "background_color": "#0a101e",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+appId: com.codewithroni.novacalc
+productName: Nova Calc
+copyright: Copyright © 2026 Md. Amzad Hossain Roni
+asar: true
+directories:
+  output: release-output
+  buildResources: build
+files:
+  - dist/**/*
+  - electron/**/*
+  - package.json
+win:
+  icon: build/icon.png
+  target:
+    - nsis
+    - portable
+  artifactName: Nova-Calc-${version}-Windows-${arch}.${ext}
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+mac:
+  icon: build/icon.png
+  category: public.app-category.productivity
+  target:
+    - dmg
+  identity: null
+  artifactName: Nova-Calc-${version}-macOS-${arch}.${ext}
+linux:
+  icon: build/icon.png
+  category: Utility
+  target:
+    - deb
+  artifactName: Nova-Calc-${version}-Linux-${arch}.${ext}
