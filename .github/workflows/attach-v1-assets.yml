@@ -31,7 +31,7 @@ jobs:
             Nova-Calc-1.0.0-Windows-Portable-x64.exe \
             Nova-Calc-1.0.0-macOS-arm64.dmg \
             Nova-Calc-1.0.0-macOS-x64.dmg \
-            Nova-Calc-1.0.0-Linux-x64.deb; do
+            Nova-Calc-1.0.0-Linux-amd64.deb; do
             test -s "release-upload/$expected" || { echo "::error::Missing $expected"; exit 1; }
           done
       - name: Publish 5 desktop installers on GitHub Release v1.0.0
@@ -41,4 +41,5 @@ jobs:
         run: |
           set -euo pipefail
           gh release upload v1.0.0 release-upload/*.exe release-upload/*.dmg release-upload/*.deb --repo "$GITHUB_REPOSITORY" --clobber
+          gh release edit v1.0.0 --repo "$GITHUB_REPOSITORY" --notes-file docs/release-notes-v1.0.0.md
           gh release view v1.0.0 --repo "$GITHUB_REPOSITORY" --json url,assets --jq '{url: .url, files: [.assets[].name]}'
